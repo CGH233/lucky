@@ -9,13 +9,14 @@ def signin():
     if request.method == 'POST':
         username = request.get_json().get("sno")
         password = request.get_json().get("password")
-        if username is not None:
+        if "sno" in request.get_json():
             response = login_once(username, password)
             if response is not None:
                 response = eval(response)
                 major = response.get('data').get('roleDepartment').get('departmentName')
                 gender = response.get('data').get('userInfoVO').get('userInfo').get('sex')
                 name = response.get('data').get('roleDepartment').get('realname') 
+                gender = gender.encode('utf-8')
                 if gender == '男':
                     gender = 0
                 else:
